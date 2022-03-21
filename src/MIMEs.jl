@@ -20,6 +20,7 @@ const _source_preference = ("nginx", "apache", nothing, "iana")
 const _ext2mime = Dict{String,String}()
 const _mime2ext = Dict{String,Vector}()
 
+# Ported straight from https://github.com/jshttp/mime-types/blob/2.1.35/index.js#L154
 for (mime_str, val) in _mimedb
     mime = mime_str
     
