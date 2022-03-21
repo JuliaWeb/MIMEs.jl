@@ -17,6 +17,6 @@ julia> contenttype_from_mime(m)
 
 # Implementation
 
-This package uses the [jshttp/mime-db](https://github.com/jshttp/mime-db) database, made available using Artifacts. The function implementations, including resolution for conflicting extensions, is based on [jshttp/mime-types](https://github.com/jshttp/mime-types).
+This package uses the [jshttp/mime-db](https://github.com/jshttp/mime-db) database, made available [using Artifacts](https://github.com/fonsp/MIMEs/blob/main/Artifacts.toml). The function implementations, including resolution for conflicting extensions, is based on [jshttp/mime-types](https://github.com/jshttp/mime-types).
 
 The database parsing and processing happens during precompilation, lookups are very fast.
