@@ -9,10 +9,14 @@ using Artifacts
 const _mimedb_root = artifact"mimedb"
 
 const _mimedb_json = joinpath(_mimedb_root, "package", "db.json")
-const _mimedb = JSON.parse(read(_mimedb_json, String))
+const _mimedb = let
+    d = JSON.parse(read(_mimedb_json, String))
 
-# https://github.com/jshttp/mime-db/issues/194
-_mimedb["text/javascript"], _mimedb["application/javascript"] = _mimedb["application/javascript"], _mimedb["text/javascript"]
+    # https://github.com/jshttp/mime-db/issues/194
+    d["text/javascript"], d["application/javascript"] = d["application/javascript"], d["text/javascript"]
+    
+    d
+end
 
 
 const _source_preference = ("nginx", "apache", nothing, "iana")
