@@ -38,3 +38,10 @@ The database parsing and processing happens during precompilation, lookups are v
 
 * [tkf/MIMEFileExtensions.jl](https://github.com/tkf/MIMEFileExtensions.jl): Similar smaller package based on the Apache database, for MIME <-> extension conversion only. MIMEs.jl also contains additional MIME-related queries useful for writing servers.
 * [JuliaIO/FileType.jl](https://github.com/JuliaIO/FileType.jl): File type (including MIME) detection based also on the file content.
+
+# Future development & scope
+
+Future goals of MIMEs.jl:
+- All things MIME! If you are writing a web application in Julia and you are missing MIME-related functionality, let us know! Issues and Pull Requests are welcome.
+- This package will be regularly updated to match the (monthly) updates to [jshttp/mime-db](https://github.com/jshttp/mime-db). Right now this is involves manually running the https://github.com/fonsp/MIMEs.jl/blob/main/update_artifacts.jl script, but we might automate this in the future.
+- Currently, the precompilation of MIMEs.jl takes 800ms (happens in parallel), and the import takes 130ms. If these times are a problem for your application, let us know, and we can discuss options to improve!
