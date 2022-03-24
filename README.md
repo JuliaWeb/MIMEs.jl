@@ -36,5 +36,5 @@ The database parsing and processing happens during precompilation, lookups are v
 
 # See also
 
-* [tkf/MIMEFileExtensions.jl](https://github.com/tkf/MIMEFileExtensions.jl): Similar smaller package for MIME <-> extension conversion, based on the Apache database.
+* [tkf/MIMEFileExtensions.jl](https://github.com/tkf/MIMEFileExtensions.jl): Similar smaller package based on the Apache database, for MIME <-> extension conversion only. MIMEs.jl also contains additional MIME-related queries useful for writing servers.
 * [JuliaIO/FileType.jl](https://github.com/JuliaIO/FileType.jl): File type (including MIME) detection based also on the file content.
