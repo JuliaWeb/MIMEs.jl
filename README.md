@@ -23,7 +23,7 @@ julia> contenttype_from_mime(m) # the Content-Type HTTP header
 
 # Implementation
 
-This package uses the popular [jshttp/mime-db](https://github.com/jshttp/mime-db) database, made available [using Artifacts](https://github.com/fonsp/MIMEs/blob/main/Artifacts.toml). This database is an aggregation of the following sources:
+This package uses the popular [jshttp/mime-db](https://github.com/jshttp/mime-db) database. This database is an aggregation of the following sources:
 
 - https://hg.nginx.org/nginx/raw-file/default/conf/mime.types
 - https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
@@ -32,7 +32,12 @@ This package uses the popular [jshttp/mime-db](https://github.com/jshttp/mime-db
 
 The function implementations, including resolution for conflicting extensions (nginx > apache > mime-db > IANA), is based on [jshttp/mime-types](https://github.com/jshttp/mime-types).
 
-The database parsing and processing happens during precompilation, lookups are very fast.
+The database is parsed and processed by us, and written directly to the source code (see #3). This means that the package has no dependencies, and loads very fast: 
+
+```julia
+julia> @time import MIMEs; MIMEs.mime_from_path("a/foo.txt")
+  0.023083 seconds (36.38 k allocations: 3.107 MiB, 39.83% compilation time)
+```
 
 # See also
 
@@ -43,5 +48,4 @@ The database parsing and processing happens during precompilation, lookups are v
 
 Future goals of MIMEs.jl:
 - All things MIME! If you are writing a web application in Julia and you are missing MIME-related functionality, let us know! Issues and Pull Requests are welcome.
-- This package will be regularly updated to match the (monthly) updates to [jshttp/mime-db](https://github.com/jshttp/mime-db). Right now this is involves manually running the https://github.com/fonsp/MIMEs.jl/blob/main/update_artifacts.jl script, but we might automate this in the future. See #1
-- Currently, the precompilation of MIMEs.jl takes 800ms (happens in parallel), and the import takes 130ms. If these times are a problem for your application, let us know, and we can discuss options to improve! See #2
+- This package will be regularly updated to match the (monthly) updates to [jshttp/mime-db](https://github.com/jshttp/mime-db). Right now this is involves manually running the update script, but we might automate this in the future. See #1
