@@ -1,11 +1,17 @@
 using Test
 using MIMEs
 
+sub(s) = SubString(s, 1)
+
+@test mime_from_path("a/foo.txt") === MIME"text/plain"()
+@test mime_from_path(sub("a/foo.txt")) === MIME"text/plain"()
+@test mime_from_path("a/fo🌟oê.txt") === MIME"text/plain"()
 @test mime_from_path("a/foo.txt") === MIME"text/plain"()
 @test mime_from_path("a/foo.json") === MIME"application/json"()
 @test mime_from_extension(".json") === MIME"application/json"()
 @test mime_from_extension("json") === MIME"application/json"()
 @test mime_from_extension("JSON") === MIME"application/json"()
+@test mime_from_extension(sub("JSON")) === MIME"application/json"()
 @test extension_from_mime(MIME"application/json"()) == ".json"
 @test extension_from_mime(MIME"application/x-asfdafd"()) == ""
 @test extension_from_mime(MIME"application/x-asfdafd"(), ".a") == ".a"

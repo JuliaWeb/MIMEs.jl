@@ -6,7 +6,7 @@ const _mimedb, _ext2mime, _mime2ext = include(joinpath(@__DIR__, "..", "mimedb",
 
 """
 ```julia
-mime_from_extension(query::String[, default=nothing])::MIME
+mime_from_extension(query::AbstractString[, default=nothing])::MIME
 ```
 
 # Examples:
@@ -17,7 +17,7 @@ mime_from_extension("asdfff") == nothing
 mime_from_extension("asdfff", MIME"text/plain"()) == MIME"text/plain"()
 ```
 """
-function mime_from_extension(query::String, default=nothing)
+function mime_from_extension(query::AbstractString, default=nothing)
     m = get(_ext2mime, lowercase(lstrip(query, '.')), nothing)
     m === nothing ? default : MIME(m)
 end
@@ -25,7 +25,7 @@ end
 
 """
 ```julia
-mime_from_path(path::String[, default::T=nothing])::Union{MIME,T}
+mime_from_path(path::AbstractString[, default::T=nothing])::Union{MIME,T}
 ```
 
 Return the MIME type of the file at `path`, based on the file extension.
@@ -38,7 +38,7 @@ mime_from_path("/home/fons/wow") == nothing
 mime_from_path("/home/fons/wow", MIME"text/plain"()) == MIME"text/plain"()
 ```
 """
-function mime_from_path(path::String, default=nothing)
+function mime_from_path(path::AbstractString, default=nothing)
     mime_from_extension(splitext(path)[2], default)
 end
 
