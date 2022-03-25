@@ -4,53 +4,9 @@ export mime_from_extension, mime_from_path, extension_from_mime, charset_from_mi
 
 using Serialization
 
-const _mimedb = let
-    d = deserialize(joinpath(@__DIR__, "..", "mimedb", "mimedb.jd"))
-    # https://github.com/jshttp/mime-db/issues/194
-    d["text/javascript"], d["application/javascript"] = d["application/javascript"], d["text/javascript"]
-    d
-end
-
-const _source_preference = ("nginx", "apache", nothing, "iana")
-
-const _ext2mime = Dict{String,String}()
-const _mime2ext = Dict{String,Vector}()
-
-# Ported straight from https://github.com/jshttp/mime-types/blob/2.1.35/index.js#L154
-for (mime_str, val) in _mimedb
-    mime = mime_str
-
-    exts = get(val, "extensions", nothing)
-    if exts === nothing
-        continue
-    end
-    _mime2ext[mime] = exts
-
-    src = get(val, "source", nothing)
-    for ex in exts
-        if haskey(_ext2mime, ex)
-            other_src = get(_mimedb[identity(_ext2mime[ex])], "source", nothing)
-
-            from = findfirst(isequal(other_src), _source_preference)
-            to = findfirst(isequal(src), _source_preference)
-
-            if (
-                !(_ext2mime[ex] isa MIME"application/octet-stream") &&
-                (
-                    from > to ||
-                    (from == to && startswith(identity(_ext2mime[ex]), "application/")
-                    )
-                )
-            )
-                # skip the remapping
-                continue
-            end
-        end
-
-        _ext2mime[ex] = mime
-    end
-
-end
+const _mimedb   = deserialize(joinpath(@__DIR__, "..", "mimedb", "mimedb.jd"))
+const _ext2mime = deserialize(joinpath(@__DIR__, "..", "mimedb", "ext2mime.jd"))
+const _mime2ext = deserialize(joinpath(@__DIR__, "..", "mimedb", "mime2ext.jd"))
 
 """
 ```julia
