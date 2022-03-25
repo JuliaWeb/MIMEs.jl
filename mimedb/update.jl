@@ -7,9 +7,7 @@ import Downloads: download
 version = v"1.52.0"
 
 skip  = false
-mdb   = joinpath(@__DIR__, "mimedb.jd")
-e2m   = joinpath(@__DIR__, "ext2mime.jd")
-m2e   = joinpath(@__DIR__, "mime2ext.jd")
+mdb   = joinpath(@__DIR__, "mimedb.jlon")
 
 _source_preference = ("nginx", "apache", nothing, "iana")
 
@@ -24,7 +22,7 @@ begin
 
     if version == latest_version
         @info "✅  The version matches the latest version of the mime DB."
-        skip = isfile(mdb) && isfile(e2m) && isfile(m2e)
+        skip = isfile(mdb)
         skip && @info "✅  The files are already there, nothing to do."
     else
         @info """
@@ -85,15 +83,12 @@ skip || begin
         end
     end
 
-    @info "✏  writing to files ($mdb, $e2m, $m2e)..."
+    @info "✏  writing to file $mdb..."
     open(mdb, "w") do f
-        write(f, string(_mimedb))
-    end
-    open(e2m, "w") do f
-        write(f, string(_ext2mime))
-    end
-    open(m2e, "w") do f
-        write(f, string(_mime2ext))
+        write(f, string(
+            (_mimedb, _ext2mime, _mime2ext)
+            )
+        )
     end
     @info "✅  all done with mime DB version $version."
 end
