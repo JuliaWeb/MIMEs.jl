@@ -1,6 +1,0 @@
-[mimedb]
-git-tree-sha1 = "6ac9178816f707e7ed89993630f34ab12ac0176e"
-
-    [[mimedb.download]]
-    sha256 = "b8e70bb4d52acd5d0d1ed848c0e6e3c903a533aa500acffbe003f011b18f9e3b"
-    url = "https://registry.npmjs.org/mime-db/-/mime-db-1.52.0.tgz"
