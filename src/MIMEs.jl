@@ -89,7 +89,7 @@ function compressible_from_mime(mime::MIME)
     if c === nothing
         false
     else
-        get(c, "compressible", false)
+        get(c, "compressible", false)::Bool
     end
 end
 
