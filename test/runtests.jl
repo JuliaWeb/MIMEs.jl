@@ -1,5 +1,4 @@
 using Test
-
 using MIMEs
 
 @test mime_from_path("a/foo.txt") === MIME"text/plain"()
@@ -78,7 +77,7 @@ end
 
 
 # Mismatched with MDN, but that's fine:
-# ".aac" => "audio/aac", 
+# ".aac" => "audio/aac",
 # ".wav" => "audio/wav",
 # ".oga" => "audio/ogg", ".ogv" => "video/ogg",
 # ".opus" => "audio/opus",
