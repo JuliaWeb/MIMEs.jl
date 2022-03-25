@@ -26,6 +26,9 @@ sub(s) = SubString(s, 1)
 @test contenttype_from_mime(MIME"text/asdfasdfasdf"()) == "text/asdfasdfasdf; charset=utf-8"
 
 @test mime_from_extension("js") == MIME"text/javascript"()
+@test charset_from_mime(mime_from_extension("js")) == "UTF-8"
+@test mime_from_extension("jl") == MIME"text/julia"()
+@test charset_from_mime(mime_from_extension("jl")) == "UTF-8"
 
 @test compressible_from_mime(MIME"text/html"())
 @test compressible_from_mime(MIME"text/css"())

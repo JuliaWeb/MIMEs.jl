@@ -22,8 +22,6 @@ begin
 
     if version == latest_version
         @info "✅  The version matches the latest version of the mime DB."
-        skip = isfile(mdb)
-        skip && @info "✅  The files are already there, nothing to do."
     else
         @info """
             ❗ There's a new version $(latest_version) of the mime DB. You
@@ -34,13 +32,20 @@ begin
     end
 end
 
-skip || begin
+begin
     @info "📩  downloading the DB..."
     url = "https://cdn.jsdelivr.net/gh/jshttp/mime-db@$(version)/db.json"
     d   = JSON.parse(read(download(url), String))
     _mimedb = let
         # https://github.com/jshttp/mime-db/issues/194
         d["text/javascript"], d["application/javascript"] = d["application/javascript"], d["text/javascript"]
+        
+        d["text/julia"] = Dict{String,Any}(
+            "charset" => "UTF-8",
+            "compressible" => true,
+            "extensions" => ["jl"],
+        )
+        
         d
     end
 
