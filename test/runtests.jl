@@ -23,6 +23,7 @@ sub(s) = SubString(s, 1)
 @test charset_from_mime(MIME"text/html"()) == "UTF-8"
 @test contenttype_from_mime(MIME"application/x-asfdafd"()) == "application/x-asfdafd"
 @test contenttype_from_mime(MIME"text/html"()) == "text/html; charset=utf-8"
+@test contenttype_from_mime(MIME"text/asdfasdfasdf"()) == "text/asdfasdfasdf; charset=utf-8"
 
 @test mime_from_extension("js") == MIME"text/javascript"()
 
