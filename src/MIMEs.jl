@@ -97,7 +97,7 @@ end
 
 """
 ```julia
-charset_from_mime(mime::MIME)::String
+charset_from_mime(mime::MIME[, default::T=nothing])::Union{String,T}
 ```
 
 The default charset associated with this type, if any. If not known, text MIMEs default to "UTF-8". Possible values are: $(Set([get(x, "charset", nothing) for x in (_mimedb |> values)]) |> collect |> string).
