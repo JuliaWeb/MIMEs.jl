@@ -2,11 +2,9 @@ module MIMEs
 
 export mime_from_extension, mime_from_path, extension_from_mime, charset_from_mime, compressible_from_mime, contenttype_from_mime
 
-using Serialization
-
-const _mimedb   = deserialize(joinpath(@__DIR__, "..", "mimedb", "mimedb.jd"))
-const _ext2mime = deserialize(joinpath(@__DIR__, "..", "mimedb", "ext2mime.jd"))
-const _mime2ext = deserialize(joinpath(@__DIR__, "..", "mimedb", "mime2ext.jd"))
+const _mimedb   = include(joinpath(@__DIR__, "..", "mimedb", "mimedb.jd"))
+const _ext2mime = include(joinpath(@__DIR__, "..", "mimedb", "ext2mime.jd"))
+const _mime2ext = include(joinpath(@__DIR__, "..", "mimedb", "mime2ext.jd"))
 
 """
 ```julia

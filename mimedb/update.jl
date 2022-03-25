@@ -1,8 +1,6 @@
 import Pkg
 Pkg.activate(@__DIR__)
 
-import Serialization: serialize
-
 import JSON
 import Downloads: download
 
@@ -89,13 +87,13 @@ skip || begin
 
     @info "✏  writing to files ($mdb, $e2m, $m2e)..."
     open(mdb, "w") do f
-        serialize(f, _mimedb)
+        write(f, string(_mimedb))
     end
     open(e2m, "w") do f
-        serialize(f, _ext2mime)
+        write(f, string(_ext2mime))
     end
     open(m2e, "w") do f
-        serialize(f, _mime2ext)
+        write(f, string(_mime2ext))
     end
     @info "✅  all done with mime DB version $version."
 end
