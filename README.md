@@ -32,12 +32,21 @@ This package uses the popular [jshttp/mime-db](https://github.com/jshttp/mime-db
 
 The function implementations, including resolution for conflicting extensions (nginx > apache > mime-db > IANA), is based on [jshttp/mime-types](https://github.com/jshttp/mime-types).
 
+## Performance
+
 The database is parsed and processed by us, and written directly to the source code (see #3). This means that the package has no dependencies, and loads very fast: 
 
 ```julia
 julia> @time import MIMEs; MIMEs.mime_from_path("a/foo.txt")
   0.023083 seconds (36.38 k allocations: 3.107 MiB, 39.83% compilation time)
 ```
+
+## Opinions
+
+While mostly cold and technical, this package contains a couple of opinionated choices:
+- We use multiple sources for MIME information, and when these sources have conflicting/duplicate information, we 
+- `text/javascript` is used for `.js` and `.mjs` files, not `application/javascript`. This transition is still underway in official channels, but @fonsp prefers to start using `text/javascript` today. [More info →](https://github.com/jshttp/mime-db/issues/194)
+- `text/julia` is used for `.jl` files. This MIME is not (yet) official: [More info →](https://github.com/JuliaWeb/MIMEs.jl/issues/4)
 
 # See also
 
@@ -48,4 +57,4 @@ julia> @time import MIMEs; MIMEs.mime_from_path("a/foo.txt")
 
 Future goals of MIMEs.jl:
 - All things MIME! If you are writing a web application in Julia and you are missing MIME-related functionality, let us know! Issues and Pull Requests are welcome.
-- This package will be regularly updated to match the (monthly) updates to [jshttp/mime-db](https://github.com/jshttp/mime-db). Right now this is involves manually running the update script, but we might automate this in the future. See #1
+- This package will be regularly updated to match the (monthly) updates to [jshttp/mime-db](https://github.com/jshttp/mime-db). Right now this is involves manually running the update script, but we might automate this in the future. [More info →](https://github.com/JuliaWeb/MIMEs.jl/issues/1)
