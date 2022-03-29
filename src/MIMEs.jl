@@ -164,6 +164,8 @@ Extract a MIME from a Content-Type header value. If the input is empty, `default
 ```julia
 contenttype_from_mime("application/json; charset=utf-8") == MIME"application/json"()
 contenttype_from_mime("application/x-bogus") == MIME"application/x-bogus"()
+contenttype_from_mime("") == nothing
+contenttype_from_mime("", MIME"application/octet-stream"()) == MIME"application/octet-stream"()
 ```
 
 # See also:
