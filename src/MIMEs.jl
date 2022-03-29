@@ -6,7 +6,7 @@ const _mimedb, _ext2mime, _mime2ext = include(joinpath(@__DIR__, "..", "mimedb",
 
 """
 ```julia
-mime_from_extension(query::AbstractString[, default=nothing])::MIME
+mime_from_extension(query::AbstractString[, default::T=nothing])::Union{MIME,T}
 ```
 
 # Examples:
