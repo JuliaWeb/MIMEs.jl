@@ -162,10 +162,10 @@ Extract a MIME from a Content-Type header value. If the input is empty, `default
 
 # Examples:
 ```julia
-contenttype_from_mime("application/json; charset=utf-8") == MIME"application/json"()
-contenttype_from_mime("application/x-bogus") == MIME"application/x-bogus"()
-contenttype_from_mime("") == nothing
-contenttype_from_mime("", MIME"application/octet-stream"()) == MIME"application/octet-stream"()
+mime_from_contenttype("application/json; charset=utf-8") == MIME"application/json"()
+mime_from_contenttype("application/x-bogus") == MIME"application/x-bogus"()
+mime_from_contenttype("") == nothing
+mime_from_contenttype("", MIME"application/octet-stream"()) == MIME"application/octet-stream"()
 ```
 
 # See also:
