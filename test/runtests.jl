@@ -37,6 +37,12 @@ sub(s) = SubString(s, 1)
 @test contenttype_from_mime(MIME"application/json"()) == "application/json; charset=utf-8"
 @test contenttype_from_mime(MIME"application/x-bogus"()) == "application/x-bogus"
 
+
+@test mime_from_contenttype("application/json; charset=utf-8") == MIME"application/json"()
+@test mime_from_contenttype("application/x-bogus") == MIME"application/x-bogus"()
+@test mime_from_contenttype("") == nothing
+@test mime_from_contenttype("", MIME"application/octet-stream"()) == MIME"application/octet-stream"()
+
 # from https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 const mdn = Dict(
     ".bin" => "application/octet-stream",
