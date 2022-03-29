@@ -6,8 +6,7 @@ import Downloads: download
 
 version = v"1.52.0"
 
-skip  = false
-mdb   = joinpath(@__DIR__, "mimedb.jlon")
+mdb = joinpath(@__DIR__, "mimedb.jlon")
 
 _source_preference = ("nginx", "apache", nothing, "iana")
 
