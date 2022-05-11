@@ -36,6 +36,7 @@ sub(s) = SubString(s, 1)
 
 @test contenttype_from_mime(MIME"application/json"()) == "application/json; charset=utf-8"
 @test contenttype_from_mime(MIME"application/x-bogus"()) == "application/x-bogus"
+@test contenttype_from_mime(mime_from_extension(".png", MIME"application/octet-stream"())) == "image/png"
 
 # from https://developer.mozilla.org/en-US/docs/Web/HTTP/Basics_of_HTTP/MIME_types/Common_types
 const mdn = Dict(
