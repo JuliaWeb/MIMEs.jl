@@ -1,5 +1,6 @@
 import Pkg
 Pkg.activate(@__DIR__)
+Pkg.instantiate()
 
 import JSON
 import Downloads: download
