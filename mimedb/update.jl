@@ -94,6 +94,11 @@ begin
             _ext2mime[ex] = mime
         end
     end
+    
+    # Changing the default mime for the .mp4 extension to video/mp4
+    # this is the more common and expected type, and makes the assumption that the file contains video
+    # The RFC https://www.rfc-editor.org/rfc/rfc4337.txt does not specify a **default** mime type for mp4 files, it should depend on content. application/mp4 should be used for mp4 files without video/audio content, so it is not necessarily a better default than video/mp4.
+    _ext2mime["mp4"] = "video/mp4"
 
     @info "✏  writing to file $mdb..."
     open(mdb, "w") do f
