@@ -57,7 +57,7 @@ const mdn = Dict(
     ".jsonld" => "application/ld+json",
     ".mjs" => "text/javascript",
     ".mp3" => "audio/mpeg",
-    ".mp4" => "video/mp4",
+    ".mp4" => "application/mp4",
     ".mpeg" => "video/mpeg",
     ".ogx" => "application/ogg",  ".otf" => "font/otf",
     ".png" => "image/png",

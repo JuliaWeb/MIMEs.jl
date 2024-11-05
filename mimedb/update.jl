@@ -4,12 +4,20 @@ Pkg.instantiate()
 
 import JSON
 import Downloads: download
+import OrderedCollections: OrderedDict
 
 version = v"1.53.0"
 
 mdb = joinpath(@__DIR__, "mimedb.jlon")
 
 _source_preference = ("nginx", "apache", nothing, "iana")
+
+
+
+unorder(d::AbstractDict) = Dict(k => unorder(v) for (k, v) in d)
+unorder(d::AbstractVector) = map(unorder, d)
+unorder(x::Any) = x
+
 
 # Check if there's a new version and alert the user, don't automatically take
 # it as the format of the JSON may change
@@ -35,7 +43,7 @@ end
 begin
     @info "📩  downloading the DB..."
     url = "https://cdn.jsdelivr.net/gh/jshttp/mime-db@$(version)/db.json"
-    d   = JSON.parse(read(download(url), String))
+    d   = JSON.parse(read(download(url), String); dicttype=OrderedDict)
     _mimedb = let
         d["text/julia"] = Dict{String,Any}(
             "charset" => "UTF-8",
@@ -54,17 +62,19 @@ begin
     # Ported straight from https://github.com/jshttp/mime-types/blob/2.1.35/index.js#L154
     for (mime_str, val) in _mimedb
         mime = mime_str
+        @assert mime isa String
 
         exts = get(val, "extensions", nothing)
         if exts === nothing
             continue
         end
+        @assert exts isa Vector
         _mime2ext[mime] = exts
 
         src = get(val, "source", nothing)
         for ex in exts
             if haskey(_ext2mime, ex)
-                other_src = get(_mimedb[identity(_ext2mime[ex])], "source", nothing)
+                other_src = get(_mimedb[_ext2mime[ex]], "source", nothing)
 
                 from = findfirst(isequal(other_src), _source_preference)
                 to = findfirst(isequal(src), _source_preference)
@@ -73,7 +83,7 @@ begin
                     !(_ext2mime[ex] isa MIME"application/octet-stream") &&
                     (
                         from > to ||
-                        (from == to && startswith(identity(_ext2mime[ex]), "application/")
+                        (from == to && startswith(_ext2mime[ex], "application/")
                         )
                     )
                 )
@@ -88,7 +98,7 @@ begin
     @info "✏  writing to file $mdb..."
     open(mdb, "w") do f
         write(f, string(
-            (_mimedb, _ext2mime, _mime2ext)
+            (unorder(_mimedb), _ext2mime, _mime2ext)
             )
         )
     end
