@@ -1,6 +1,6 @@
 module MIMEs
 
-export mime_from_extension, mime_from_path, extension_from_mime, charset_from_mime, compressible_from_mime, contenttype_from_mime
+export mime_from_extension, mime_from_path, extension_from_mime, charset_from_mime, compressible_from_mime, contenttype_from_mime, mime_from_contenttype
 
 const _mimedb, _ext2mime, _mime2ext = include(joinpath(@__DIR__, "..", "mimedb", "mimedb.jlon"))
 
@@ -147,10 +147,34 @@ contenttype_from_mime(mime_from_extension(".png", MIME"application/octet-stream"
 ```
 
 # See also:
-[`charset_from_mime`](@ref)
+[`charset_from_mime`](@ref), [`mime_from_contenttype`](@ref)
 """
 contenttype_from_mime(mime::MIME) = let c = charset_from_mime(mime)
     c === nothing ? string(mime) : "$(string(mime)); charset=$(lowercase(c))"
+end
+
+
+"""
+```julia
+mime_from_contenttype(content_type::String[, default::T=nothing])::Union{MIME,T}
+```
+
+Extract a MIME from a Content-Type header value. If the input is empty, `default` is returned.
+
+# Examples:
+```julia
+mime_from_contenttype("application/json; charset=utf-8") == MIME"application/json"()
+mime_from_contenttype("application/x-bogus") == MIME"application/x-bogus"()
+mime_from_contenttype("") == nothing
+mime_from_contenttype("", MIME"application/octet-stream"()) == MIME"application/octet-stream"()
+```
+
+# See also:
+[`contenttype_from_mime`](@ref)
+"""
+function mime_from_contenttype(content_type::String, default=nothing)
+    result = strip(split(content_type, ';')[1])
+    isempty(result) ? default : MIME(result)
 end
 
 
