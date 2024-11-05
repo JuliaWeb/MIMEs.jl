@@ -5,12 +5,15 @@ A small package to transform between file extensions and MIME types, with bonus 
 ```julia
 julia> using MIMEs
 
+### For filename extensions:
 julia> m = mime_from_extension(".json")
 MIME type application/json
 
 julia> extension_from_mime(m)
 ".json"
 
+
+### For web servers:
 julia> compressible_from_mime(m) # whether content of this MIME can/should be gzipped
 true
 
@@ -19,6 +22,9 @@ julia> charset_from_mime(m)
 
 julia> contenttype_from_mime(m) # the Content-Type HTTP header
 "application/json; charset=utf-8"
+
+julia> mime_from_contenttype("application/json; charset=utf-8")
+MIME type application/json
 ```
 
 # Implementation

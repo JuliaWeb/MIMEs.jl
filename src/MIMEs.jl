@@ -1,6 +1,6 @@
 module MIMEs
 
-export mime_from_extension, mime_from_path, extension_from_mime, charset_from_mime, compressible_from_mime, contenttype_from_mime
+export mime_from_extension, mime_from_path, extension_from_mime, charset_from_mime, compressible_from_mime, contenttype_from_mime, mime_from_contenttype
 
 const _mimedb, _ext2mime, _mime2ext = include(joinpath(@__DIR__, "..", "mimedb", "mimedb.jlon"))
 
