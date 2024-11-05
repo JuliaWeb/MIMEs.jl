@@ -5,7 +5,7 @@ Pkg.instantiate()
 import JSON
 import Downloads: download
 
-version = v"1.52.0"
+version = v"1.53.0"
 
 mdb = joinpath(@__DIR__, "mimedb.jlon")
 
@@ -37,9 +37,6 @@ begin
     url = "https://cdn.jsdelivr.net/gh/jshttp/mime-db@$(version)/db.json"
     d   = JSON.parse(read(download(url), String))
     _mimedb = let
-        # https://github.com/jshttp/mime-db/issues/194
-        d["text/javascript"], d["application/javascript"] = d["application/javascript"], d["text/javascript"]
-        
         d["text/julia"] = Dict{String,Any}(
             "charset" => "UTF-8",
             "compressible" => true,
