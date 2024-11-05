@@ -36,6 +36,7 @@ sub(s) = SubString(s, 1)
 
 @test contenttype_from_mime(MIME"application/json"()) == "application/json; charset=utf-8"
 @test contenttype_from_mime(MIME"application/x-bogus"()) == "application/x-bogus"
+@test contenttype_from_mime(mime_from_extension(".png", MIME"application/octet-stream"())) == "image/png"
 
 
 @test mime_from_contenttype("application/json; charset=utf-8") == MIME"application/json"()
@@ -63,8 +64,10 @@ const mdn = Dict(
     ".mjs" => "text/javascript",
     ".mp3" => "audio/mpeg",
     ".mp4" => "video/mp4",
+    ".mp4s" => "application/mp4",
     ".mpeg" => "video/mpeg",
-    ".ogx" => "application/ogg",  ".otf" => "font/otf",
+    ".ogx" => "application/ogg",
+    ".otf" => "font/otf",
     ".png" => "image/png",
     ".pdf" => "application/pdf",
     ".rtf" => "application/rtf",
