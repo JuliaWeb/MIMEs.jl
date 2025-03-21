@@ -6,7 +6,7 @@ import JSON
 import Downloads: download
 import OrderedCollections: OrderedDict
 
-version = v"1.53.0"
+version = v"1.54.0"
 
 mdb = joinpath(@__DIR__, "mimedb.jlon")
 
@@ -101,11 +101,8 @@ begin
     _ext2mime["mp4"] = "video/mp4"
 
     @info "✏  writing to file $mdb..."
-    open(mdb, "w") do f
-        write(f, string(
-            (unorder(_mimedb), _ext2mime, _mime2ext)
-            )
-        )
-    end
+    write(mdb, string(
+        (unorder(_mimedb), _ext2mime, _mime2ext)
+    ))
     @info "✅  all done with mime DB version $version."
 end
